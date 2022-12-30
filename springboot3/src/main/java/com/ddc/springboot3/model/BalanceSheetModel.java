@@ -14,6 +14,7 @@ public class BalanceSheetModel {
     private String productName;
     private String bankName;
     private Long totalAmount;
+    private Double totalInterest;
     private Long stageNumber;
     private String annualInterestRate;
     private String startDate;
@@ -23,6 +24,9 @@ public class BalanceSheetModel {
     private String lastPaymentDate;
 
     private int currentStageNumber;
+    private Double remainingPrincipal;
+    private Double remainingInterest;
+    private Double remainingTotalAmount;
 
 }
 

@@ -32,6 +32,7 @@ public class BalanceSheetController {
             balanceSheetModel.setProductName(balanceSheetEntity.getProductName());
             balanceSheetModel.setBankName(balanceSheetEntity.getBankName());
             balanceSheetModel.setTotalAmount(balanceSheetEntity.getTotalAmount());
+            balanceSheetModel.setTotalInterest(Double.parseDouble(balanceSheetEntity.getMonthlyInterest()) * balanceSheetEntity.getStageNumber());
             balanceSheetModel.setStageNumber(balanceSheetEntity.getStageNumber());
             balanceSheetModel.setAnnualInterestRate(balanceSheetEntity.getAnnualInterestRate());
             balanceSheetModel.setStartDate(balanceSheetEntity.getStartDate());
@@ -41,10 +42,13 @@ public class BalanceSheetController {
             balanceSheetModel.setLastPaymentDate(balanceSheetEntity.getLastPaymentDate());
             balanceSheetModel.setCurrentStageNumber(CalendarUtil.getCurrentStageNumber(balanceSheetEntity.getStartDate()));
             Long remainingStageNumber = balanceSheetEntity.getStageNumber() - balanceSheetModel.getCurrentStageNumber();
+            remainingPrincipal +=  Double.parseDouble(balanceSheetEntity.getMonthlyPrincipal()) * remainingStageNumber;
             totalAmount += balanceSheetEntity.getTotalAmount();
             totalAmountForCurrentMonth += Double.parseDouble(balanceSheetEntity.getMonthlyPrincipal());
             totalInterestForCurrentMonth += Double.parseDouble(balanceSheetEntity.getMonthlyInterest());
-            remainingPrincipal +=  Double.parseDouble(balanceSheetEntity.getMonthlyPrincipal()) * remainingStageNumber;
+            balanceSheetModel.setRemainingPrincipal(Double.parseDouble(balanceSheetEntity.getMonthlyPrincipal()) * remainingStageNumber);
+            balanceSheetModel.setRemainingInterest(Double.parseDouble(balanceSheetEntity.getMonthlyInterest()) * remainingStageNumber);
+            balanceSheetModel.setRemainingTotalAmount(balanceSheetModel.getRemainingPrincipal() + balanceSheetModel.getRemainingInterest());
             balanceSheetModelList.add(balanceSheetModel);
         }
         balanceSheet.setTotalAmount(totalAmount);
